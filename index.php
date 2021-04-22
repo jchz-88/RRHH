@@ -43,8 +43,10 @@
 <script type="text/javascript">
 $(function() {
   var interval = setInterval(function() {
-    var momentNow = moment();
-    $('#date').html(momentNow.format('dddd').substring(0,3).toUpperCase() + ' - ' + momentNow.format('MMMM DD, YYYY'));  
+
+    var momentNow = moment().locale('es');
+
+    $('#date').html(momentNow.format('dddd').substring(0,3).toUpperCase() + ' - ' + momentNow.format('DD MMMM - YYYY').toUpperCase());  
     $('#time').html(momentNow.format('hh:mm:ss A'));
   }, 100);
 
