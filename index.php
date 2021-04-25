@@ -8,22 +8,32 @@
   	</div>
   
   	<div class="login-box-body">
-    	<h4 class="login-box-msg">Ingrese su ID de Empleado</h4>
+    	
 
     	<form id="attendance">
           <div class="form-group">
-            <select class="form-control" name="status">
-              <option value="in">Hora de Entrada</option>
-              <option value="out">Hora de Salida</option>
-            </select>
+            <span id="entrada">ENTRADA</span>
+            <input type="checkbox" id="switch" name="status"/>
+            
+            <label for="switch"></label>
+            <span id="salida" >SALIDA</span>
+
+
+   <!--           <select class="form-control" name="status">
+                <option value="in">Hora de Entrada</option>
+                <option value="out">Hora de Salida</option>
+              </select>
+-->
           </div>
+          <h4 class="login-box-msg">Ingrese su ID de Empleado</h4>
+
       		<div class="form-group has-feedback">
         		<input type="text" class="form-control input-lg" id="employee" name="employee" required>
-        		<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+        		<span class="glyphicon glyphicon-share form-control-feedback"></span>
       		</div>
       		<div class="row">
     			<div class="col-xs-4">
-          			<button type="submit" class="btn btn-primary btn-block btn-flat" name="signin"><i class="fa fa-sign-in"></i> Login</button>
+          			<button type="submit" class="btn btn-primary btn-block btn-flat" style="display: none;" name="signin"><i class="fa fa-sign-in"></i> Login</button>
         		</div>
       		</div>
     	</form>
@@ -46,13 +56,14 @@ $(function() {
 
     var momentNow = moment().locale('es');
 
-    $('#date').html(momentNow.format('dddd').substring(0,3).toUpperCase() + ' - ' + momentNow.format('DD MMMM - YYYY').toUpperCase());  
+    $('#date').html(momentNow.format('dddd').substring(0,3).toUpperCase() + ' - ' + momentNow.format('DD').toUpperCase() + ' de ' + momentNow.format('MMMM').toUpperCase());  
     $('#time').html(momentNow.format('hh:mm:ss A'));
   }, 100);
 
   $('#attendance').submit(function(e){
     e.preventDefault();
     var attendance = $(this).serialize();
+    alert(attendance);
     $.ajax({
       type: 'POST',
       url: 'attendance.php',
