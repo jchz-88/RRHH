@@ -12,14 +12,14 @@
 
     	<form id="attendance">
           <div class="form-group">
+           
             <span id="entrada">ENTRADA</span>
-            <input type="checkbox" id="switch" name="status"/>
-            
+            <input type="checkbox" id="switch" value="out" name="status"/>
             <label for="switch"></label>
             <span id="salida" >SALIDA</span>
 
-
-   <!--           <select class="form-control" name="status">
+<!--
+             <select class="form-control" name="status">
                 <option value="in">Hora de Entrada</option>
                 <option value="out">Hora de Salida</option>
               </select>
@@ -74,12 +74,14 @@ $(function() {
           $('.alert').hide();
           $('.alert-danger').show();
           $('.message').html(response.message);
+          setTimeout(function(){ location.reload(); }, 3500);  
         }
         else{
           $('.alert').hide();
           $('.alert-success').show();
           $('.message').html(response.message);
           $('#employee').val('');
+          setTimeout(function(){ location.reload(); }, 3500);
         }
       }
     });

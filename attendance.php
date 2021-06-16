@@ -6,7 +6,12 @@
 		include 'timezone.php';
 
 		$employee = $_POST['employee'];
-		$status = $_POST['status'];
+			
+			if(isset($_POST['status'])){
+				$status ='out';
+			}else{
+				$status='in';
+			}	
 
 		$sql = "SELECT * FROM employees WHERE employee_id = '$employee'";
 		$query = $conn->query($sql);
@@ -17,31 +22,31 @@
 
 			$date_now = date('Y-m-d');
 
-			if($status == ''){
+			if($status == 'in'){
 				$sql = "SELECT * FROM attendance WHERE employee_id = '$id' AND date = '$date_now' AND time_in IS NOT NULL";
 				$query = $conn->query($sql);
 				if($query->num_rows > 0){
 					$output['error'] = true;
 					$output['message'] = 'Has registrado tu entrada por hoy';
-				}
-				else{
-					//updates
-					$sched = $row['schedule_id'];
-					$lognow = date('H:i:s');
-					$sql = "SELECT * FROM schedules WHERE id = '$sched'";
-					$squery = $conn->query($sql);
-					$srow = $squery->fetch_assoc();
-					$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
-					//
-					$sql = "INSERT INTO attendance (employee_id, date, time_in, status) VALUES ('$id', '$date_now', NOW(), '$logstatus')";
-					if($conn->query($sql)){
-						$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
 					}
 					else{
-						$output['error'] = true;
-						$output['message'] = $conn->error;
+						//updates
+						$sched = $row['schedule_id'];
+						$lognow = date('H:i:s');
+						$sql = "SELECT * FROM schedules WHERE id = '$sched'";
+						$squery = $conn->query($sql);
+						$srow = $squery->fetch_assoc();
+						$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
+						//
+						$sql = "INSERT INTO attendance (employee_id, date, time_in, status) VALUES ('$id', '$date_now', NOW(), '$logstatus')";
+						if($conn->query($sql)){
+							$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
+						}
+						else{
+							$output['error'] = true;
+							$output['message'] = $conn->error;
+						}
 					}
-				}
 			}
 			else{
 				$sql = "SELECT *, attendance.id AS uid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id WHERE attendance.employee_id = '$id' AND date = '$date_now'";

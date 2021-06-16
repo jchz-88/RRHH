@@ -1,4 +1,4 @@
 <?php
-	$timezone = 'AiresAmerica/Argentina/Buenos_Aires';
+	$timezone = 'America/Argentina/Buenos_Aires';
 	date_default_timezone_set($timezone);
 ?>
