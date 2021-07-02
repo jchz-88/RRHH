@@ -6,6 +6,10 @@
 		include 'timezone.php';
 
 		$employee = $_POST['employee'];
+		$desc_salud= $_POST['descrip_s'];
+		$desc_tec= $_POST['descrip_t'];
+		$ip=$_POST['ip'];
+		
 			
 			if(isset($_POST['status'])){
 				$status ='out';
@@ -38,7 +42,9 @@
 						$srow = $squery->fetch_assoc();
 						$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
 						//
-						$sql = "INSERT INTO attendance (employee_id, date, time_in, status) VALUES ('$id', '$date_now', NOW(), '$logstatus')";
+						
+						$sql = "INSERT INTO attendance (employee_id, date, time_in, status, desc_salud, desc_tec, ip) VALUES ('$id', '$date_now', NOW(), '$logstatus', '$desc_salud', '$desc_tec', '$ip')";
+						
 						if($conn->query($sql)){
 							$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
 						}

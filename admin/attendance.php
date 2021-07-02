@@ -57,13 +57,16 @@
                   <th>Nombre</th>
                   <th>Hora Entrada</th>
                   <th>Hora Salida</th>
-                  <th>Acción</th>
+                  <th>IP de Registro</th>
+                  <th>Detalles de Reg</th>
+                  <th>Acciónes</th>
                 </thead>
                 <tbody>
                   <?php
                     $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
+                      
                       $status = ($row['status'])?'<span class="label label-warning pull-right">a tiempo</span>':'<span class="label label-danger pull-right">tarde</span>';
                       echo "
                         <tr>
@@ -73,6 +76,18 @@
                           <td>".$row['firstname'].' '.$row['lastname']."</td>
                           <td>".date('h:i A', strtotime($row['time_in'])).$status."</td>
                           <td>".date('h:i A', strtotime($row['time_out']))."</td>
+                          <td>".$row['ip']."</td>
+                          <td>";
+                            
+                            if ($row['desc_tec']) {
+                                echo "<button class='btn btn-warning btn-sm btn-flat detail_t' data-id='".$row['attid']."'><i class='fa fa-desktop'></i>  Tecnico</button>";
+                              }
+                            if ($row['desc_salud']) {
+                                echo "<button class='btn btn-info btn-sm btn-flat detail_s' data-id='".$row['attid']."'><i class='fa fa-ambulance'></i>  Salud</button>";
+                              }
+                          
+                          echo "
+                          </td>
                           <td>
                             <button class='btn btn-success btn-sm btn-flat edit' data-id='".$row['attid']."'><i class='fa fa-edit'></i> Editar</button>
                             <button class='btn btn-danger btn-sm btn-flat delete' data-id='".$row['attid']."'><i class='fa fa-trash'></i> Eliminar</button>
@@ -103,6 +118,21 @@ $(function(){
     getRow(id);
   });
 
+  $('.detail_s').click(function(e){
+    e.preventDefault();
+    $('#detail_s').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
+  
+  $('.detail_t').click(function(e){
+    e.preventDefault();
+    $('#detail_t').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
   $('.delete').click(function(e){
     e.preventDefault();
     $('#delete').modal('show');
@@ -126,6 +156,8 @@ function getRow(id){
       $('#employee_name').html(response.firstname+' '+response.lastname);
       $('#del_attid').val(response.attid);
       $('#del_employee_name').html(response.firstname+' '+response.lastname);
+      $('#salud').html(response.desc_salud);
+      $('#tecnico').html(response.desc_tec);
     }
   });
 }

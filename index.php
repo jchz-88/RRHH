@@ -1,6 +1,41 @@
 <?php session_start(); ?>
 <?php include 'header.php'; ?>
-<body class="hold-transition login-page">
+
+<script>
+function miFuncion(){
+  var desc = document.getElementById('descrip_s');
+  var desc2 = document.getElementById('descrip_t');
+  desc.style.display = 'none';
+  desc2.style.display = 'none';
+}
+
+function s_desc_1(){
+    var desc = document.getElementById('descrip_s');
+    desc.style.display = 'none';
+    desc.style.margin= '0vh';
+  }
+  function s_desc_2(){
+    var desc = document.getElementById('descrip_s');
+    desc.style.display = 'block';
+    desc.style.margin = '1vh';
+  }
+
+  
+function t_desc_1(){
+    var desc = document.getElementById('descrip_t');
+    desc.style.display = 'none';
+    desc.style.margin = '0vh';
+  }
+  function t_desc_2(){
+    var desc = document.getElementById('descrip_t');
+    desc.style.display = 'block';
+    desc.style.margin = '1vh';
+  }
+
+
+</script>
+
+<body class="hold-transition login-page" onload="miFuncion();">
 <div class="login-box">
   	<div class="login-logo">
   		<p id="date"></p>
@@ -15,7 +50,7 @@
            
             <span id="entrada">ENTRADA</span>
             <input type="checkbox" id="switch" value="out" name="status"/>
-            <label for="switch"></label>
+            <label for="switch" class="lb"></label>
             <span id="salida" >SALIDA</span>
 
 <!--
@@ -24,20 +59,77 @@
                 <option value="out">Hora de Salida</option>
               </select>
 -->
+          
+          <h4 class="login-box-msg">ID de Empleado</h4>
+          <div class="empleado">
+            <div class="form-group has-feedback">
+              <input type="text" class="form-control input-lg" id="employee" name="employee" required>
+              <span class="glyphicon glyphicon-share form-control-feedback"></span>
+            </div>
           </div>
-          <h4 class="login-box-msg">Ingrese su ID de Empleado</h4>
+          <span class="s_salud">SALUD</span>
+          <div class="salud">
+                  <div class="toggle-radio">
+                    <input type="radio" name="rdo" id="yes" value="y" onclick="s_desc_1()">
+                    <input type="radio" name="rdo" id="no" value="n" onclick="s_desc_2()">
+                    <div class="switch">
+                      <label id="lb_bm" for="yes">Bueno</label>
+                      <label id="lb_bm" for="no">Malo</label>
+                      <span></span>
+                    </div>
+                  </div>
+          </div>
+      		
 
-      		<div class="form-group has-feedback">
-        		<input type="text" class="form-control input-lg" id="employee" name="employee" required>
-        		<span class="glyphicon glyphicon-share form-control-feedback"></span>
-      		</div>
-      		<div class="row">
+          <span class="s_equip">TECNICO</span>
+          <div class="equip">
+                  <div class="toggle-radio">
+                    <input type="radio" name="rdo2" id="yes2" value="y" onclick="t_desc_1()">
+                    <input type="radio" name="rdo2" id="no2" value="n" onclick="t_desc_2()">
+                    <div class="switch2">
+                      <label id="lb_bm2" for="yes2">OK</label>
+                      <label id="lb_bm2" for="no2">NO</label>
+                      <span></span>
+                    </div>
+                  </div>
+          </div>
+
+          <div class="descrip_s">
+            <div class="form-group has-feedback">
+              <textarea name="descrip_s" id="descrip_s" cols="45" rows="3" placeholder="Problema de Salud que presenta..." ></textarea>
+             
+              <!-- <input type="text" cols="1" rows="3" class="form-control input-lg" id="descrip" name="descrip" placeholder="Descripción del problema..." required>
+              -->
+
+            </div>
+          </div>
+          <hr>
+          <div class="descrip_t">
+            <div class="form-group has-feedback">
+              <textarea name="descrip_t" id="descrip_t" cols="45" rows="3" placeholder="Problema Tecnico que esta teniendo..." ></textarea>
+             
+              <!-- <input type="text" cols="1" rows="3" class="form-control input-lg" id="descrip" name="descrip" placeholder="Descripción del problema..." required>
+              -->
+
+            </div>
+          </div>
+
+          <div class="row">
     			<div class="col-xs-4">
           			<button type="submit" class="btn btn-primary btn-block btn-flat" style="display: none;" name="signin"><i class="fa fa-sign-in"></i> Login</button>
         		</div>
       		</div>
+          <div class="ip">
+            <?php  $ip = file_get_contents('https://api.ipify.org');
+            echo "Resgitranado con IP: " . $ip; ?>
+            <input type="text"  style="display: none;" name="ip" id="ip" value="<?php  $ip = file_get_contents('https://api.ipify.org');
+            echo $ip; ?>">
+          </div>
     	</form>
+     
   	</div>
+
+    
 		<div class="alert alert-success alert-dismissible mt20 text-center" style="display:none;">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <span class="result"><i class="icon fa fa-check"></i> <span class="message"></span></span>
@@ -88,6 +180,8 @@ $(function() {
   });
     
 });
+
+
 </script>
 </body>
 </html>

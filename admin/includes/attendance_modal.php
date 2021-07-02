@@ -129,4 +129,54 @@
 </div>
 
 
+<!-- Detalle Salud -->
+<div class="modal fade" id="detail_s">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              		<span aria-hidden="true">&times;</span></button>
+            	<h4 class="modal-title"><b><span id="attendance_date"></span></b></h4>
+          	</div>
+          	<div class="modal-body">
+            	<form class="form-horizontal" method="POST" action="attendance_delete.php">
+            		<input type="hidden" id="del_attid" name="id">
+            		<div class="text-center">
+	                	<p>DETALLES DE ESTADO DE SALUD</p>
+	                	<h2 id="salud" class="bold"></h2>
+	            	</div>
+          	</div>
+          	<div class="modal-footer">
+            	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+            	</form>
+          	</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Detalle Tecnico -->
+<div class="modal fade" id="detail_t">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              		<span aria-hidden="true">&times;</span></button>
+            	<h4 class="modal-title"><b><span id="attendance_date"></span></b></h4>
+          	</div>
+          	<div class="modal-body">
+            	<form class="form-horizontal" method="POST" action="attendance_delete.php">
+            		<input type="hidden" id="del_attid" name="id">
+            		<div class="text-center">
+	                	<p>DETALLES DE ESTADO DE TECNICO</p>
+	                	<h2 id="tecnico" class="bold"></h2>
+	            	</div>
+          	</div>
+          	<div class="modal-footer">
+            	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+            	</form>
+          	</div>
+        </div>
+    </div>
+</div>
      
