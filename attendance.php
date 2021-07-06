@@ -9,7 +9,9 @@
 		$desc_salud= $_POST['descrip_s'];
 		$desc_tec= $_POST['descrip_t'];
 		$ip=$_POST['ip'];
-		
+		$salud=$_POST['rdo'];
+		$tecnico=$_POST['rdo2'];
+		$if=$_POST['rdo']+$_POST['rdo2'];
 			
 			if(isset($_POST['status'])){
 				$status ='out';
@@ -34,25 +36,100 @@
 					$output['message'] = 'Has registrado tu entrada por hoy';
 					}
 					else{
-						//updates
-						$sched = $row['schedule_id'];
-						$lognow = date('H:i:s');
-						$sql = "SELECT * FROM schedules WHERE id = '$sched'";
-						$squery = $conn->query($sql);
-						$srow = $squery->fetch_assoc();
-						$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
-						//
-						
-						$sql = "INSERT INTO attendance (employee_id, date, time_in, status, desc_salud, desc_tec, ip) VALUES ('$id', '$date_now', NOW(), '$logstatus', '$desc_salud', '$desc_tec', '$ip')";
-						
-						if($conn->query($sql)){
-							$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
-						}
-						else{
-							$output['error'] = true;
-							$output['message'] = $conn->error;
-						}
+							//updates
+							if($if==2){
+								
+									$sched = $row['schedule_id'];
+									$lognow = date('H:i:s');
+									$sql = "SELECT * FROM schedules WHERE id = '$sched'";
+									$squery = $conn->query($sql);
+									$srow = $squery->fetch_assoc();
+									$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
+									//
+									
+									$sql = "INSERT INTO attendance (employee_id, date, time_in, status, desc_salud, desc_tec, ip) VALUES ('$id', '$date_now', NOW(), '$logstatus', '$desc_salud', '$desc_tec', '$ip')";
+									
+									if($conn->query($sql)){
+										$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
+									}
+									else{
+									$output['error'] = true;
+									$output['message'] = $conn->error;
+									}	
+							}elseif($if==3) {
+								if($desc_salud==''){
+									$output['error'] = true;
+									$output['message'] = 'Debe completar el campo detalle Salud';
+								}else{
+									$sched = $row['schedule_id'];
+									$lognow = date('H:i:s');
+									$sql = "SELECT * FROM schedules WHERE id = '$sched'";
+									$squery = $conn->query($sql);
+									$srow = $squery->fetch_assoc();
+									$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
+									//
+									
+									$sql = "INSERT INTO attendance (employee_id, date, time_in, status, desc_salud, desc_tec, ip) VALUES ('$id', '$date_now', NOW(), '$logstatus', '$desc_salud', '$desc_tec', '$ip')";
+									
+									if($conn->query($sql)){
+										$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
+									}
+									else{
+									$output['error'] = true;
+									$output['message'] = $conn->error;
+									}	
+								}
+
+							}elseif($if==4){
+								if($desc_tec==''){
+									$output['error'] = true;
+									$output['message'] = 'Complete breve descripción de Problema Tecnico';
+								}else{
+									$sched = $row['schedule_id'];
+									$lognow = date('H:i:s');
+									$sql = "SELECT * FROM schedules WHERE id = '$sched'";
+									$squery = $conn->query($sql);
+									$srow = $squery->fetch_assoc();
+									$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
+									//
+									
+									$sql = "INSERT INTO attendance (employee_id, date, time_in, status, desc_salud, desc_tec, ip) VALUES ('$id', '$date_now', NOW(), '$logstatus', '$desc_salud', '$desc_tec', '$ip')";
+									
+									if($conn->query($sql)){
+										$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
+									}
+									else{
+									$output['error'] = true;
+									$output['message'] = $conn->error;
+									}	
+								}
+							}elseif($if==5){
+								if($desc_tec=='' || $desc_salud==''){
+									$output['error'] = true;
+									$output['message'] = 'Debe completar los campos con detalles';
+								}else{
+									$sched = $row['schedule_id'];
+									$lognow = date('H:i:s');
+									$sql = "SELECT * FROM schedules WHERE id = '$sched'";
+									$squery = $conn->query($sql);
+									$srow = $squery->fetch_assoc();
+									$logstatus = ($lognow > $srow['time_in']) ? 0 : 1;
+									//
+									
+									$sql = "INSERT INTO attendance (employee_id, date, time_in, status, desc_salud, desc_tec, ip) VALUES ('$id', '$date_now', NOW(), '$logstatus', '$desc_salud', '$desc_tec', '$ip')";
+									
+									if($conn->query($sql)){
+										$output['message'] = 'Llegada: '.$row['firstname'].' '.$row['lastname'];
+									}
+									else{
+									$output['error'] = true;
+									$output['message'] = $conn->error;
+									}	
+								}
+							}
+								
 					}
+				
 			}
 			else{
 				$sql = "SELECT *, attendance.id AS uid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id WHERE attendance.employee_id = '$id' AND date = '$date_now'";

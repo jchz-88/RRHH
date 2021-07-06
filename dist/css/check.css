@@ -109,7 +109,7 @@ box-shadow: inset 2px 2px 4px 3px rgba(0,0,0,0.27);
 .empleado{
 	grid-row: 10;
 	grid-column: 1/4;
-  margin-bottom: 3vh;
+  margin-bottom: 1.7vh;
   -webkit-box-shadow: 1.5px 1.5px 1.5px 1.5px rgba(0,0,0,0.62);
     -moz-box-shadow: 1.5px 1.5px 1.5px 1.5px rgba(0,0,0,0.62);
     box-shadow: 1.5px 1.5px 1.5px 1.5px rgba(0,0,0,0.62);
@@ -385,5 +385,17 @@ box-shadow: inset 2px 2px 4px 3px rgba(0,0,0,0.27);
   .ip{
     grid-row: 11;
     grid-column: 1/4;
+    
     margin: 0;
   }
+
+.foot{
+  width: 100%;
+  background-color: #6e7d9e;
+  font-size: 1.1rem;
+  color: rgb(201, 198, 198);
+  position: fixed;
+  text-align: center;
+  right: 0;
+  bottom: 0;
+}

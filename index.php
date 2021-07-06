@@ -63,15 +63,15 @@ function t_desc_1(){
           <h4 class="login-box-msg">ID de Empleado</h4>
           <div class="empleado">
             <div class="form-group has-feedback">
-              <input type="text" class="form-control input-lg" id="employee" name="employee" required>
+              <input type="text" class="form-control input-lg" id="employee" name="employee">
               <span class="glyphicon glyphicon-share form-control-feedback"></span>
             </div>
           </div>
           <span class="s_salud">SALUD</span>
-          <div class="salud">
+          <div class="salud" id="salud">
                   <div class="toggle-radio">
-                    <input type="radio" name="rdo" id="yes" value="y" onclick="s_desc_1()">
-                    <input type="radio" name="rdo" id="no" value="n" onclick="s_desc_2()">
+                    <input type="radio" name="rdo" id="yes" value=0 onclick="s_desc_1()">
+                    <input type="radio" name="rdo" id="no" value=1 onclick="s_desc_2()">
                     <div class="switch">
                       <label id="lb_bm" for="yes">Bueno</label>
                       <label id="lb_bm" for="no">Malo</label>
@@ -82,10 +82,10 @@ function t_desc_1(){
       		
 
           <span class="s_equip">TECNICO</span>
-          <div class="equip">
+          <div class="equip" id="equip">
                   <div class="toggle-radio">
-                    <input type="radio" name="rdo2" id="yes2" value="y" onclick="t_desc_1()">
-                    <input type="radio" name="rdo2" id="no2" value="n" onclick="t_desc_2()">
+                    <input type="radio" name="rdo2" id="yes2" value=2 onclick="t_desc_1()">
+                    <input type="radio" name="rdo2" id="no2" value=4 onclick="t_desc_2()">
                     <div class="switch2">
                       <label id="lb_bm2" for="yes2">OK</label>
                       <label id="lb_bm2" for="no2">NO</label>
@@ -96,7 +96,7 @@ function t_desc_1(){
 
           <div class="descrip_s">
             <div class="form-group has-feedback">
-              <textarea name="descrip_s" id="descrip_s" cols="45" rows="3" placeholder="Problema de Salud que presenta..." ></textarea>
+              <textarea name="descrip_s" id="descrip_s" cols="45" rows="3" placeholder="Problema Salud: Descripción breve..." ></textarea>
              
               <!-- <input type="text" cols="1" rows="3" class="form-control input-lg" id="descrip" name="descrip" placeholder="Descripción del problema..." required>
               -->
@@ -106,7 +106,7 @@ function t_desc_1(){
           <hr>
           <div class="descrip_t">
             <div class="form-group has-feedback">
-              <textarea name="descrip_t" id="descrip_t" cols="45" rows="3" placeholder="Problema Tecnico que esta teniendo..." ></textarea>
+              <textarea name="descrip_t" id="descrip_t" cols="45" rows="3" placeholder="Problema Tecnico: Descripción breve..." ></textarea>
              
               <!-- <input type="text" cols="1" rows="3" class="form-control input-lg" id="descrip" name="descrip" placeholder="Descripción del problema..." required>
               -->
@@ -120,10 +120,9 @@ function t_desc_1(){
         		</div>
       		</div>
           <div class="ip">
-            <?php  $ip = file_get_contents('https://api.ipify.org');
-            echo "Resgitranado con IP: " . $ip; ?>
-            <input type="text"  style="display: none;" name="ip" id="ip" value="<?php  $ip = file_get_contents('https://api.ipify.org');
-            echo $ip; ?>">
+            <spam id="ipp" name="ipp">Deshabilitar AdBlock</spam>
+            <input type="text" style="display: none;" name="ip" id="ip" >
+              
           </div>
     	</form>
      
@@ -143,6 +142,8 @@ function t_desc_1(){
 	
 <?php include 'scripts.php' ?>
 <script type="text/javascript">
+
+
 $(function() {
   var interval = setInterval(function() {
 
@@ -152,7 +153,13 @@ $(function() {
     $('#time').html(momentNow.format('hh:mm:ss A'));
   }, 100);
 
+
+    
   $('#attendance').submit(function(e){
+    if (document.querySelector('#switch').checked == true) {
+      document.querySelector('#yes').checked = true;
+      document.querySelector('#yes2').checked = true; 
+    }
     e.preventDefault();
     var attendance = $(this).serialize();
     alert(attendance);
@@ -166,7 +173,7 @@ $(function() {
           $('.alert').hide();
           $('.alert-danger').show();
           $('.message').html(response.message);
-          setTimeout(function(){ location.reload(); }, 3500);  
+          //setTimeout(function(){ location.reload(); }, 3500);  
         }
         else{
           $('.alert').hide();
@@ -179,9 +186,24 @@ $(function() {
     });
   });
     
+
+
 });
 
+  function getIP(json) {
+      document.getElementById('ip').value = (json.ip);
+      document.getElementById('ipp').innerHTML = "Registro con IP: " + (json.ip);
+  }
 
 </script>
+
+<script src="http://api.ipify.org?format=jsonp&callback=getIP"></script>
+
 </body>
+<footer>
+  <div class="foot">
+    
+    <spam > <span style="font-size: 0.9rem;" class="glyphicon glyphicon-user"></span> - JChavez - zextjchavez@correoargentino.com.ar - <img src="images/logo2.png" width="11" height="9"> Correo Argentino © - <img src="images/logo1.png" width="15" height="8"> Novatium © - 2021 </spam>
+  </div>
+</footer>
 </html>
